@@ -5,6 +5,10 @@ export default class AppComponent extends Component {
     return (
       <div>
         <center><h1>Not yet available!</h1></center>
+        s
+        o
+        m
+        e
       </div>
     )
   }
