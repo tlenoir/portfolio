@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/tlenoir/portfolio.git/precache-manifest.a43960fbc301033cf96d2d1c4755c44c.js"
+  "/tlenoir/portfolio.git/precache-manifest.b4fe161fcc71d7f7c8201be4034737cc.js"
 );
 
 workbox.clientsClaim();
