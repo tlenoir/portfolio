@@ -1,15 +1,24 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import Navigation from "../Navigation";
+import Animation from "../Animation";
+import Gallery from "../Gallery";
 
 export default class AppComponent extends Component {
   render() {
     return (
+      <BrowserRouter>
       <div>
-        <center><h1>Not yet available!</h1></center>
-        s
-        o
-        m
-        e
+        <Navigation />
+        <div className="container-fluid">
+        <Switch>
+          <Route exact path="/animation" component={Animation} />
+          <Route exact path="/" component={Gallery} />
+        </Switch>
+        </div>
       </div>
+      </BrowserRouter>
     )
   }
 }
