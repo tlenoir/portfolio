@@ -1,6 +1,5 @@
 import React, { Component, useEffect, useState } from 'react'
-
-console.log('gallery', process.env.REACT_APP_UNSPLASH_API_KEYS)
+import Gallery from 'react-photo-gallery'
 class GalleryComponent extends Component {
     render() {
         return (
@@ -12,33 +11,25 @@ class GalleryComponent extends Component {
     }
 }
 function Unsplash() {
-    // eslint-disable-next-line
-    const [keys, setKeys] = useState(process.env.REACT_APP_UNSPLASH_API_KEYS)
     const [picture, setPicture] = useState([])
 
     useEffect(() => {
         fetch("https://api.unsplash.com/search/photos?query=tahiti", {
             headers: {
-                "Authorization": `Client-ID ${keys}`
+                "Authorization": `Client-ID ${process.env.REACT_APP_UNSPLASH_API_KEYS}`
             }
         }).then((response) => {
-            return response.json()
-        }).then(data => {
-            setPicture(data.results.map(url_img => {
-                return (
-                    <div key={url_img.id}>
-                        <img alt="" src={url_img.urls.regular} />
-                    </div>
-                )
+            return response.json();
+        }).then(response =>
+            response.results.map(url => ({
+                src: `${url.urls.small}`
             }))
-            
-        })        
-    }, [])
+        ).then(data => {
+            setPicture(data);
+        });
+    }, []);
     return (
-        <div>
-            {/* <Gallery photos={picture} /> */}
-            {picture}
-        </div>
+        <Gallery photos={picture}/>
     )
 }
 export default GalleryComponent;

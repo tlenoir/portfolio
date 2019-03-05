@@ -13,7 +13,7 @@ export default class Navigation extends Component {
                 <Link className="nav-link active" to='/gallery'>Gallery</Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link active" to='/animation'>Shop</Link>
+                <Link className="nav-link active" to='/shop'>Shop</Link>
             </li>
             <li className="nav-item">
                 <Link className="nav-link active" to='/animation'>Movie</Link>
