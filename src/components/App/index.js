@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Navigation from "../Navigation";
 import Animation from "../Animation";
-import Gallery from "../Gallery";
+import GalleryComponent from "../Gallery";
 
 export default class AppComponent extends Component {
   render() {
@@ -14,7 +14,7 @@ export default class AppComponent extends Component {
         <div className="container-fluid">
         <Switch>
           <Route exact path="/animation" component={Animation} />
-          <Route exact path="/" component={Gallery} />
+          <Route exact path="/" component={GalleryComponent} />
         </Switch>
         </div>
       </div>
