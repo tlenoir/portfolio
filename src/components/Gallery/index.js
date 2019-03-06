@@ -11,6 +11,7 @@ class GalleryComponent extends Component {
     }
 }
 function Unsplash() {
+    const img = new Image()
     const [picture, setPicture] = useState([])
 
     useEffect(() => {
@@ -20,16 +21,22 @@ function Unsplash() {
             }
         }).then((response) => {
             return response.json();
-        }).then(response =>
-            response.results.map(url => ({
-                src: `${url.urls.small}`
-            }))
-        ).then(data => {
-            setPicture(data);
+        }).then(response => {
+            return response.results.map(function(r) {
+                img.src = r.urls.small
+                return {
+                    src: r.urls.small,
+                    width: img.width,
+                    height: img.height
+                }
+            })
+        }).then(data => {
+            console.log('data', data)
+            setPicture(data)
         });
     }, []);
     return (
-        <Gallery photos={picture}/>
+        <Gallery photos={picture} />
     )
 }
 export default GalleryComponent;
