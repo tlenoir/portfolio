@@ -25,7 +25,7 @@ function Unsplash() {
             return response.results.map(function(r) {
                 img.src = r.urls.small
                 return {
-                    src: r.urls.small,
+                    src: img.src,
                     width: img.width,
                     height: img.height
                 }

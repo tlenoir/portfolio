@@ -4,6 +4,7 @@ export default class ShopComponent extends Component {
   render() {
     return (
       <div>
+        shop
         <RandomList />
       </div>
     )
