@@ -1,10 +1,9 @@
 import React, { Component, useState, useEffect } from 'react'
-
+import './movie.css'
 export default class MovieComponent extends Component {
   render() {
     return (
       <div>
-        movies
         <MovieRequest />
       </div>
     )
@@ -47,14 +46,12 @@ function MovieRequest() {
     <>
       <div className="card-columns">
         {movie_list.map(data_movie => (
-          <div className="card">
-            <img src={data_movie.src} className="card-img-top" alt="..." />
-            <div className="card-body">
-              <h5 className="card-title">{data_movie.title}</h5>
-              <p className="card-text">{data_movie.overview}</p>
-            </div>
-            <div className="card-footer">
-              <small className="text-muted">{data_movie.popu}</small>
+          <div className="card bg-dark text-white portfolio-img_wrap">
+            <img src={data_movie.src} className="card-img" alt={data_movie.title} />
+            <div className="card-img-overlay portfolio-img_description_layer">
+              <h5 className="card-title portfolio-img_description">{data_movie.title}</h5>
+              <p className="card-text portfolio-img_description">{data_movie.overview}</p>
+              <p className="card-text portfolio-img_description">{data_movie.popu}</p>
             </div>
           </div>
         ))}

@@ -1,3 +1,46 @@
-.portofolio-card {
-    width: auto;
+.portfolio-img_description_layer {
+    background: rgba(36, 62, 206, 0.6);
+    color: #fff;
+    visibility: hidden;
+    opacity: 0;
+    /* transition effect. not necessary */
+    transition: opacity .2s, visibility .2s;
+}
+
+.portfolio-img_wrap:hover .portfolio-img_description_layer {
+    visibility: visible;
+    opacity: 1;
+}
+
+.portfolio-img_description {
+    transition: .2s;
+    transform: translateY(1em);
+}
+
+.portfolio-img_wrap:hover .portfolio-img_description {
+    transform: translateY(0);
+}
+
+@media (min-width: 576px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 768px) {
+    .card-columns {
+        column-count: 3;
+    }
+}
+
+@media (min-width: 992px) {
+    .card-columns {
+        column-count: 4;
+    }
+}
+
+@media (min-width: 1200px) {
+    .card-columns {
+        column-count: 5;
+    }
 }
