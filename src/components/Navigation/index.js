@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
 
 export default class Navigation extends Component {
   render() {
@@ -14,16 +15,22 @@ export default class Navigation extends Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto" data-toggle="collapse" data-target="#navbarSupportedContent">
               <li className="nav-item">
-                <Link className="nav-link active" to='/animation'>Animation</Link>
+                <Link className="nav-link active" to={ROUTES.ANIMATION}>Animation</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" to='/gallery'>Gallery</Link>
+                <Link className="nav-link active" to={ROUTES.GALLERY}>Gallery</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" to='/shop'>Shop</Link>
+                <Link className="nav-link active" to={ROUTES.SHOP}>Shop</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" to='/movie'>Movie</Link>
+                <Link className="nav-link active" to={ROUTES.MOVIE}>Movie</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link active" to={ROUTES.BAKA}>Baka</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link active" to="/exampleModal">Modal</Link>
               </li>
             </ul>
             <form className="form-inline my-2 my-lg-0">

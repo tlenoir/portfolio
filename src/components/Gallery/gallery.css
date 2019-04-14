@@ -1,0 +1,17 @@
+.loading {
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%);
+    transform: translateX(-50%);
+    font-size: 2em;
+    font-weight: bold;
+}
+b.hehe {
+    color: #dce223cc
+}
+i.heh {
+    color: #252A1E
+}

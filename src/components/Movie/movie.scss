@@ -1,0 +1,40 @@
+// Bootstrap 4 breakpoints & gutter
+$grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px) !default;
+$grid-gutter-width: 30px !default;
+// number of cards per line for each breakpoint
+$cards-per-line: (xs: 1, sm: 2, md: 3, lg: 4, xl: 5);
+
+@each $name,
+$breakpoint in $grid-breakpoints {
+    @media (min-width: $breakpoint) {
+        .card-deck .card {
+            flex: 0 0 calc(#{100/map-get($cards-per-line, $name)}% - #{$grid-gutter-width});
+        }
+    }
+}
+
+// ----
+// Sass (v3.4.21)
+// Compass (v1.0.3)
+// ----
+
+$white: transparent;
+
+@mixin excerpt($font-size: $paragraph-font-size, $line-height: 1.4, $lines-to-show: 3, $excerpt-bg: transparent) {
+    background: $excerpt-bg;
+    display: block;
+    /* Fallback for non-webkit */
+    display: -webkit-box;
+    max-height: $font-size*$line-height*$lines-to-show;
+    /* Fallback for non-webkit */
+    font-size: $font-size;
+    line-height: $line-height;
+    -webkit-line-clamp: $lines-to-show;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.line-clamp2 {
+    @include excerpt($font-size: 1em, $line-height: 1, $lines-to-show: 14, $excerpt-bg: $white);
+}

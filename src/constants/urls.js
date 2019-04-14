@@ -1,0 +1,5 @@
+export const DISCOVER = `${process.env.REACT_APP_THEMOVIEDB_URL}${process.env.REACT_APP_THEMOVIEDB_MY_ID}/discover/movie?api_key=${process.env.REACT_APP_THEMOVIEDB_API_KEYS}&language=fr&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2019`;
+export const LATEST = `${process.env.REACT_APP_THEMOVIEDB_URL}${process.env.REACT_APP_THEMOVIEDB_MY_ID}/movie/latest?api_key=${process.env.REACT_APP_THEMOVIEDB_API_KEYS}&language=en-US`;
+export const TOPRATED = `${process.env.REACT_APP_THEMOVIEDB_URL}${process.env.REACT_APP_THEMOVIEDB_MY_ID}/movie/top_rated?api_key=${process.env.REACT_APP_THEMOVIEDB_API_KEYS}&language=en-US`;
+export const POPULAR = `${process.env.REACT_APP_THEMOVIEDB_URL}${process.env.REACT_APP_THEMOVIEDB_MY_ID}/movie/popular?api_key=${process.env.REACT_APP_THEMOVIEDB_API_KEYS}&language=en-US`;
+export const UPCOMING = `${process.env.REACT_APP_THEMOVIEDB_URL}${process.env.REACT_APP_THEMOVIEDB_MY_ID}/movie/upcoming?api_key=${process.env.REACT_APP_THEMOVIEDB_API_KEYS}&language=en-US`;

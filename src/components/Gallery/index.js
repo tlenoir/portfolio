@@ -1,62 +1,76 @@
-import React, { Component, useEffect, useState } from 'react'
-import Gallery from 'react-photo-gallery'
+import React, { Component, useEffect, useState } from 'react';
+import Gallery from 'react-photo-gallery';
+import Lightbox from 'react-images';
 import ReactPaginate from 'react-paginate';
+import SelectedImage from './selectedImage';
+import './gallery.css'
 class GalleryComponent extends Component {
     render() {
         return (
             <div>
-                Gallery
+                GalleryComponent
                 <Unsplash />
             </div>
         )
     }
 }
 function Unsplash() {
-    const img = new Image()
     const [picture, setPicture] = useState({
         pages: 0,
-        results: []
+        results: [],
     })
-    const [page, setPage] = useState(1)
     const [input, setInput] = useState({
         value: 'polynesia'
     })
-    const [search, setSearch] = useState('')
+    const [search, setSearch] = useState({
+        page: 1,
+        value: '',
+    })
+    const [currentImage, setCurrentImage] = useState({
+        index: 0,
+        lightboxIsOpen: false,
+    })
+
 
     useEffect(() => {
-        fetch(`https://api.unsplash.com/search/photos?query=${input.value}&page=${page}`, {
-            headers: {
-                "Authorization": `Client-ID ${process.env.REACT_APP_UNSPLASH_API_KEYS}`
-            }
-        }).then((response) => {
-            return response.json();
-        }).then(response => {
-            const results = response.results.map(function (r) {
-                img.src = r.urls.small
-                return {
-                    src: img.src,
-                    width: img.width,
-                    height: img.height
+        async function fetchdata() {
+            fetch(`https://api.unsplash.com/search/photos?query=${input.value}&page=${search.page}&per_page=9`, {
+                headers: {
+                    "Authorization": `Client-ID ${process.env.REACT_APP_UNSPLASH_API_KEYS}`
                 }
-            })
-            const pages = response.total_pages
-            return { results, pages }
+            }).then((response) => {
+                return response.json();
+            }).then(response => {
+                const results = response.results.map(res => ({
+                    src: res.urls.regular,
+                    width: res.width,
+                    height: res.height,
+                    thumbnail: res.urls.thumb,
+                    caption: res.description,
+                    color: res.color
 
-        }).then(data => {
-            setPicture({
-                ...picture,
-                pages: data.pages,
-                results: data.results
-            })
-        });
+                }))
+                const pages = response.total_pages
+                return { results, pages }
+
+            }).then(data => {
+                console.log(data)
+                setPicture({
+                    ...picture,
+                    pages: data.pages,
+                    results: data.results
+                })
+            });
+        }
+        fetchdata()
     }, [search]);
-    useEffect(() => {
-        setSearch(page)
-    }, [page]);
     const printValue = e => {
         e.preventDefault()
-        setSearch(input.value)
-        console.log(input.value)
+        setSearch({
+            ...search,
+            value: input.value,
+            page: 1
+        })
     };
     const updateField = e => {
         setInput({
@@ -64,44 +78,81 @@ function Unsplash() {
             value: e.target.value
         })
     };
-    /* function navigationPage(i) {
-        setPage(i)
-        console.log(i)
-    } */
     const handlePageClick = data => {
-        setPage(Math.ceil(data.selected + 1))
+        setSearch({
+            ...search,
+            page: data.selected + 1
+        })
     };
+    const openLightbox = (event, obj) => {
+        setCurrentImage({
+            ...currentImage,
+            index: obj.index,
+            lightboxIsOpen: true
+        });
+    };
+    const closeLightbox = () => {
+        setCurrentImage({
+            ...currentImage,
+            index: 0,
+            lightboxIsOpen: false,
+        });
+    };
+    const gotoPrevious = () => {
+        setCurrentImage({
+            ...currentImage,
+            index: currentImage.index - 1,
+        });
+    }
+    const gotoNext = () => {
+        setCurrentImage({
+            ...currentImage,
+            index: currentImage.index + 1,
+        });
+    }
     return (
         <>
-            <center>
-                <form onSubmit={printValue}>
+            <form className="form-inline justify-content-center" onSubmit={printValue}>
+                <div className="form-group mb-2">
                     <input
+                        className="form-control"
+                        placeholder="Type to search"
                         name="value"
                         value={input.value}
                         onChange={updateField} />
-                    <button className="btn btn-primary">Click</button>
-                </form>
-            </center>
+                </div>
+                <button className="btn btn-primary mb-2">
+                    <i className="fas fa-search"></i>
+                </button>
+            </form>
             <nav aria-label="Page navigation example">
                 <ReactPaginate
                     previousLabel={'previous'}
-                nextLabel={'next'}
-                breakLabel={'...'}
-                pageClassName={'page-item'}
-                pageLinkClassName={'page-link'}
-                previousClassName={'page-item'}
-                previousLinkClassName={'page-link'}
-                nextClassName={'page-item'}
-                nextLinkClassName={'page-link'}
-                pageCount={picture.pages}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={handlePageClick}
-                containerClassName={'pagination justify-content-center'}
-                activeClassName={'active'}
-            />
+                    nextLabel={'next'}
+                    breakLabel={'...'}
+                    pageClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
+                    previousClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    nextClassName={'page-item'}
+                    nextLinkClassName={'page-link'}
+                    pageCount={picture.pages}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick}
+                    containerClassName={'pagination justify-content-center'}
+                    activeClassName={'active'}
+                />
             </nav>
-            <Gallery photos={picture.results} />
+            <Gallery photos={picture.results} onClick={openLightbox} ImageComponent={SelectedImage} />
+            <Lightbox images={picture.results}
+                onClose={closeLightbox}
+                onClickPrev={gotoPrevious}
+                onClickNext={gotoNext}
+                currentImage={currentImage.index}
+                isOpen={currentImage.lightboxIsOpen}
+                backdropClosesModal
+            />
         </>
     )
 }

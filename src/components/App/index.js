@@ -6,22 +6,27 @@ import Animation from "../Animation";
 import GalleryComponent from "../Gallery";
 import ShopComponent from "../Shop";
 import MovieComponent from "../Movie";
+import ModalExampleComponent from "../Movie/MovieDetails";
+import Baka from "../Baka";
+import * as ROUTES from '../../constants/routes';
 
 export default class AppComponent extends Component {
   render() {
     return (
       <BrowserRouter>
-      <div>
-        <Navigation />
-        <div className="container-fluid">
-        <Switch>
-          <Route exact path="/animation" component={Animation} />
-          <Route exact path="/shop" component={ShopComponent} />
-          <Route exact path="/gallery" component={GalleryComponent} />
-          <Route exact path="/movie" component={MovieComponent} />
-        </Switch>
+        <div>
+          <Navigation />
+          <div className="container-fluid">
+            <Switch>
+              <Route exact path={ROUTES.ANIMATION} component={Animation} />
+              <Route exact path={ROUTES.SHOP} component={ShopComponent} />
+              <Route exact path={ROUTES.GALLERY} component={GalleryComponent} />
+              <Route exact path={ROUTES.MOVIE} component={MovieComponent} />
+              <Route exact path="/exampleModal" component={ModalExampleComponent} />
+              <Route exact path={ROUTES.BAKA} component={Baka} />
+            </Switch>
+          </div>
         </div>
-      </div>
       </BrowserRouter>
     )
   }
