@@ -3,3 +3,5 @@ export const LATEST = `${process.env.REACT_APP_THEMOVIEDB_URL}${process.env.REAC
 export const TOPRATED = `${process.env.REACT_APP_THEMOVIEDB_URL}${process.env.REACT_APP_THEMOVIEDB_MY_ID}/movie/top_rated?api_key=${process.env.REACT_APP_THEMOVIEDB_API_KEYS}&language=en-US`;
 export const POPULAR = `${process.env.REACT_APP_THEMOVIEDB_URL}${process.env.REACT_APP_THEMOVIEDB_MY_ID}/movie/popular?api_key=${process.env.REACT_APP_THEMOVIEDB_API_KEYS}&language=en-US`;
 export const UPCOMING = `${process.env.REACT_APP_THEMOVIEDB_URL}${process.env.REACT_APP_THEMOVIEDB_MY_ID}/movie/upcoming?api_key=${process.env.REACT_APP_THEMOVIEDB_API_KEYS}&language=en-US`;
+export const BYID1 = `${process.env.REACT_APP_THEMOVIEDB_URL}${process.env.REACT_APP_THEMOVIEDB_MY_ID}/movie/`;
+export const BYID2 = `?api_key=${process.env.REACT_APP_THEMOVIEDB_API_KEYS}&language=en-US`;

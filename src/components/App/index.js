@@ -6,7 +6,6 @@ import Animation from "../Animation";
 import GalleryComponent from "../Gallery";
 import ShopComponent from "../Shop";
 import MovieComponent from "../Movie";
-import ModalExampleComponent from "../Movie/MovieDetails";
 import Baka from "../Baka";
 import * as ROUTES from '../../constants/routes';
 
@@ -22,7 +21,6 @@ export default class AppComponent extends Component {
               <Route exact path={ROUTES.SHOP} component={ShopComponent} />
               <Route exact path={ROUTES.GALLERY} component={GalleryComponent} />
               <Route exact path={ROUTES.MOVIE} component={MovieComponent} />
-              <Route exact path="/exampleModal" component={ModalExampleComponent} />
               <Route exact path={ROUTES.BAKA} component={Baka} />
             </Switch>
           </div>

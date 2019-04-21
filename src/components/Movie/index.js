@@ -1,25 +1,30 @@
-import React, { Component, useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useContext } from 'react';
 import * as URLS from '../../constants/urls';
 import ReactPaginate from 'react-paginate';
 import './movie.css';
 import './movie.scss';
 import { Modal } from 'react-overlays';
+/* import * as ColorThief from 'color-thief'; */
 
-export default class MovieComponent extends Component {
-  render() {
-    return (
-      <div>
-        {/* <Switch>
-        <Route exact={ROUTES.MOVIE} path={ROUTES.MOVIE} component={MovieRequest} />
-        <Route path={ROUTES.MOVIEDETAILS} component={MovieDetails} />
-      </Switch> */}
-        <MovieRequest />
-      </div>
-    )
-  }
-}
 
-const backdropStyle = (bgcolor) => {
+const url_poster = 'https://image.tmdb.org/t/p/original';
+
+/* function getColorFromUrl(imageUrl, quality) {
+  const sourceImage = new Image();
+  const thief = new ColorThief();
+  sourceImage.crossOrigin = "anonymous";
+  sourceImage.src = imageUrl;
+
+  return new Promise(function (resolve) {
+    sourceImage.onload = function () {
+      const palette = thief.getPalette(sourceImage, 5, quality)
+      const dominantColor = palette[0]
+      resolve(dominantColor)
+    }
+  })
+}; */
+
+function backdropStyle(bgcolor) {
   return {
     position: 'fixed',
     zIndex: 1040,
@@ -32,7 +37,7 @@ const backdropStyle = (bgcolor) => {
   }
 };
 
-const modalStyle = function () {
+function modalStyle() {
   // we use some psuedo random coords so nested modals
   // don't sit right on top of each other.
   let top = 50;
@@ -40,7 +45,7 @@ const modalStyle = function () {
 
   return {
     position: 'fixed',
-    width: 400,
+    width: 60 + '%',
     zIndex: 1040,
     top: top + '%',
     left: left + '%',
@@ -52,6 +57,37 @@ const modalStyle = function () {
   };
 };
 
+const ModalContext = React.createContext();
+
+function Display() {
+  const values = useContext(ModalContext);
+  const value = values.dataModal;
+
+  function renderBackdrop() {
+    return <div className="label-modal-id" style={backdropStyle('white')} />;
+  };
+  return (
+    <div className="modal-example">
+      <Modal
+        style={modalStyle()}
+        aria-labelledby="modal-label"
+        show={values.show}
+        renderBackdrop={renderBackdrop}
+      >
+        <div>
+          <h4 id="modal-label">{value.title}</h4>
+          <p>
+            {value.overview}
+          </p>
+          <img className="img-fluid rounded" src={value.backdrop} alt="" />
+        </div>
+      </Modal>
+    </div>
+  );
+};
+
+const initialState = { mode: URLS.POPULAR };
+
 const delay = (time = 1500) => {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -60,36 +96,31 @@ const delay = (time = 1500) => {
   });
 };
 
-const initialState = { mode: URLS.POPULAR };
+export default function MovieComponent() {
+  const [show, setShow] = useState(false);
 
-function MovieRequest() {
-  function ModalExample(data) {
-    console.log("modalexample");
-    const renderBackdrop = () => {
-      return <div style={backdropStyle('#A52A2A')} />;
-    };
-    const closeModal = () => {
-      setModal(false)
+  /* https://stackoverflow.com/questions/3369593/how-to-detect-escape-key-press-with-pure-js-or-jquery */
+  document.onkeydown = function (evt) {
+    evt = evt || window.event;
+    var isEscape = false;
+    if ("key" in evt) {
+      isEscape = (evt.key === "Escape" || evt.key === "Esc");
+    } else {
+      isEscape = (evt.keyCode === 27);
     }
-    return (
-      <div className="modal-example">
-        <Modal
-          onHide={closeModal}
-          style={modalStyle()}
-          aria-labelledby="modal-label"
-          show={showModalComponent}
-          renderBackdrop={renderBackdrop}
-        >
-          <div>
-            <h4 id="modal-label">{data.title}</h4>
-            <p>
-              {data.overview}
-            </p>
-          </div>
-        </Modal>
-      </div>
-    );
+    if (isEscape) {
+      setShow(false);
+    }
+  };
+
+  /* https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/ */
+  document.onclick = function (evt) {
+    if (evt.target.classList.contains('label-modal-id')) {
+      console.log('setShow to false');
+      setShow(false);
+    };
   }
+
   function reducer(state, action) {
     console.log("reducer")
     switch (action.type) {
@@ -116,9 +147,8 @@ function MovieRequest() {
     backdrop_paths: [],
     item: 'Popularity'
   })
-  const url_poster = 'https://image.tmdb.org/t/p/original'
   const [loading, setLoading] = useState(false)
-  const [showModalComponent, setModal] = useState(false)
+  const [dataModal, setDataModal] = useState({})
 
   useEffect(() => {
     fetch(`${state.mode}&page=${movieList.currentPage}`)
@@ -128,7 +158,7 @@ function MovieRequest() {
       .then(response => {
         const results = response.results
           .filter(res => res.poster_path != null && res.backdrop_path != null)
-          .map(res => {
+          .map(function (res) {
             return {
               title: res.title,
               id: res.id,
@@ -138,28 +168,19 @@ function MovieRequest() {
               backdrop: `${url_poster}${res.backdrop_path}`
             }
           })
-        const cover = response.results
-          .filter(res => res.poster_path != null && res.backdrop_path != null)
-          .map(res => {
-            return {
-              title: res.title,
-              src: `${url_poster}${res.backdrop_path}`,
-              caption: res.vote_average
-            }
-          })
         const pages = response.total_pages
 
-        return { results, pages, cover }
+        return { results, pages }
       })
       .then(data => {
         setMovList({
           ...movieList,
-          backdrop_paths: data.cover,
           results: data.results,
           pages: data.pages
         })
       });
   }, [movieList.item, movieList.currentPage]);
+
   const switchOrder = async e => {
     dispatch({ type: e });
     setMovList({
@@ -182,11 +203,12 @@ function MovieRequest() {
     await delay();
     setLoading(false);
   };
-  const openModal = (data) => {
-    ModalExample(data)
+  function openModal(data) {
+    setDataModal(data);
+    setShow(true);
   };
   return (
-    <>
+    <ModalContext.Provider value={{ dataModal, show }}>
       <nav className="d-flex justify-content-center" aria-label="Page navigation example">
         <div className="dropdown p-2">
           {/* eslint-disable-next-line */}
@@ -226,7 +248,8 @@ function MovieRequest() {
       {loading ? <div className="alert alert-primary" role="alert">Loading....</div> :
         <div className="card-deck">
           {movieList.results.map((data_movie) => (
-            <div className="card my-2 bg-dark text-white portfolio-img_wrap" >
+            <div className="card my-2 bg-dark text-white portfolio-img_wrap"
+              onClick={() => openModal(data_movie)} >
               <img src={data_movie.src} className="card-img" alt={data_movie.title} />
               <div className="card-img-overlay portfolio-img_description_layer">
                 <h5 className="card-title portfolio-img_description">{data_movie.title}</h5>
@@ -235,17 +258,13 @@ function MovieRequest() {
                   <span className="badge badge-info">{data_movie.vote}
                     <i className="fas fa-star-half-alt"></i>
                   </span>
-                  <button className="btn btn-primary"
-                    onClick={() => openModal(data_movie)}>
-                    Details
-                  </button>
                 </h3>
               </div>
             </div>
           ))}
         </div>
       }
-      <ModalExample />
-    </>
+      <Display />
+    </ModalContext.Provider>
   )
-}
+};

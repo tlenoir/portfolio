@@ -1,16 +1,6 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 
-export default class ShopComponent extends Component {
-  render() {
-    return (
-      <div>
-        shop
-        <RandomList />
-      </div>
-    )
-  }
-}
-function RandomList() {
+export default function RandomList() {
   const [items, setItems] = useState([]);
 
   const addItem = () => {

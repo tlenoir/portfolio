@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "https://tlenoir.github.io/portfolio/",
   "dependencies": {
+    "canvas": "^2.4.1",
+    "color-thief": "^2.2.3",
     "gh-pages": "^2.0.1",
     "node-sass": "^4.11.0",
     "react": "^16.8.5",
