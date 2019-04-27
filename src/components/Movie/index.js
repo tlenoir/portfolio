@@ -4,12 +4,12 @@ import ReactPaginate from 'react-paginate';
 import './movie.css';
 import './movie.scss';
 import { Modal } from 'react-overlays';
-/* import * as ColorThief from 'color-thief'; */
+import * as ColorThief from 'color-thief';
 
 
 const url_poster = 'https://image.tmdb.org/t/p/original';
 
-/* function getColorFromUrl(imageUrl, quality) {
+function getColorFromUrl(imageUrl) {
   const sourceImage = new Image();
   const thief = new ColorThief();
   sourceImage.crossOrigin = "anonymous";
@@ -17,12 +17,10 @@ const url_poster = 'https://image.tmdb.org/t/p/original';
 
   return new Promise(function (resolve) {
     sourceImage.onload = function () {
-      const palette = thief.getPalette(sourceImage, 5, quality)
-      const dominantColor = palette[0]
-      resolve(dominantColor)
+      resolve(thief.getColor(sourceImage))
     }
   })
-}; */
+};
 
 function backdropStyle(bgcolor) {
   return {
@@ -33,7 +31,8 @@ function backdropStyle(bgcolor) {
     left: 0,
     right: 0,
     backgroundColor: bgcolor,
-    opacity: 0.5
+    opacity: 0.8,
+    transition: 'background-color 0.7s ease'
   }
 };
 
@@ -46,6 +45,8 @@ function modalStyle() {
   return {
     position: 'fixed',
     width: 60 + '%',
+    maxHeight: 98 + '%',
+    overflow: 'auto',
     zIndex: 1040,
     top: top + '%',
     left: left + '%',
@@ -62,9 +63,18 @@ const ModalContext = React.createContext();
 function Display() {
   const values = useContext(ModalContext);
   const value = values.dataModal;
+  const [color, setColor] = useState([255, 255, 255]);
+
+  useEffect(() => {
+    /* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve */
+    getColorFromUrl(value.backdrop).then(res => {
+      setColor(res);
+    })
+  }, [values.show]);
 
   function renderBackdrop() {
-    return <div className="label-modal-id" style={backdropStyle('white')} />;
+    /* https://awik.io/grab-dominant-color-image-jquery/ */
+    return <div className="label-modal-id" style={backdropStyle('rgb(' + color + ')')} />;
   };
   return (
     <div className="modal-example">
@@ -74,13 +84,22 @@ function Display() {
         show={values.show}
         renderBackdrop={renderBackdrop}
       >
-        <div>
+        <div className="modal-content" id="modal-label">
+          <div className="modal-header">
+            <h5 className="modal-title">{value.title}</h5>
+          </div>
+          <div className="modal-body">
+            <p>{value.overview}</p>
+            <img className="img-fluid rounded" src={value.backdrop} alt="" />
+          </div>
+        </div>
+        {/* <div>
           <h4 id="modal-label">{value.title}</h4>
           <p>
             {value.overview}
           </p>
           <img className="img-fluid rounded" src={value.backdrop} alt="" />
-        </div>
+        </div> */}
       </Modal>
     </div>
   );
@@ -204,8 +223,10 @@ export default function MovieComponent() {
     setLoading(false);
   };
   function openModal(data) {
-    setDataModal(data);
-    setShow(true);
+    if (window.innerWidth >= 720 && window.innerHeight >= 480) {
+      setDataModal(data);
+      setShow(true);
+    };
   };
   return (
     <ModalContext.Provider value={{ dataModal, show }}>
