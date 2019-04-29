@@ -6,10 +6,13 @@
   "dependencies": {
     "canvas": "^2.4.1",
     "color-thief": "^2.2.3",
+    "firebase": "^5.10.1",
     "gh-pages": "^2.0.1",
+    "moment": "^2.24.0",
     "node-sass": "^4.11.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
+    "react-firebase-hooks": "^1.2.0",
     "react-images": "^0.5.19",
     "react-lightbox-component": "^1.2.1",
     "react-overlays": "^1.2.0",
