@@ -80,7 +80,7 @@ function Shop() {
                         className="btn btn-primary mb-2">Créer item</button>
                 </form>
             }
-            <p>
+            <div>
                 {listValue.error && <strong>Error: {listValue.error}</strong>}
                 {listValue.loading && <span>List:
                     <div className="spinner-border text-danger" role="status">
@@ -96,7 +96,7 @@ function Shop() {
                         </span>
                     </React.Fragment>
                 )}
-            </p>
+            </div>
         </div>
     );
 };

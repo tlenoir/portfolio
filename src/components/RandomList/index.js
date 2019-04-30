@@ -16,7 +16,6 @@ function RandomList() {
         value: Math.random() * 100
       }
     ]);
-    console.log('items', items)
   };
 
   return (

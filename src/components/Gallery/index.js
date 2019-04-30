@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Gallery from 'react-photo-gallery';
 import Lightbox from 'react-images';
 import ReactPaginate from 'react-paginate';
