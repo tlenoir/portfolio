@@ -135,13 +135,11 @@ export default function MovieComponent() {
   /* https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/ */
   document.onclick = function (evt) {
     if (evt.target.classList.contains('label-modal-id')) {
-      console.log('setShow to false');
       setShow(false);
     };
   }
 
   function reducer(state, action) {
-    console.log("reducer")
     switch (action.type) {
       case 'Popularity':
         return { mode: URLS.POPULAR };
@@ -240,9 +238,9 @@ export default function MovieComponent() {
           </a>
 
           <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            {Object.values(OrderbyItem).map(item => (
+            {Object.values(OrderbyItem).map((item, key) => (
               // eslint-disable-next-line
-              <a className="dropdown-item" href="#" onClick={() => switchOrder(item)}>
+              <a className="dropdown-item" key={key} href="#" onClick={() => switchOrder(item)}>
                 {item}
               </a>
             ))}
@@ -268,8 +266,8 @@ export default function MovieComponent() {
       </nav>
       {loading ? <div className="alert alert-primary" role="alert">Loading....</div> :
         <div className="card-deck">
-          {movieList.results.map((data_movie) => (
-            <div className="card my-2 bg-dark text-white portfolio-img_wrap"
+          {movieList.results.map((data_movie, key) => (
+            <div key={key} className="card my-2 bg-dark text-white portfolio-img_wrap"
               onClick={() => openModal(data_movie)} >
               <img src={data_movie.src} className="card-img" alt={data_movie.title} />
               <div className="card-img-overlay portfolio-img_description_layer">

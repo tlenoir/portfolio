@@ -54,7 +54,6 @@ function Unsplash() {
                 return { results, pages }
 
             }).then(data => {
-                console.log(data)
                 setPicture({
                     ...picture,
                     pages: data.pages,

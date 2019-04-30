@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import app from 'firebase/app';
-import 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import * as ROUTES from '../../constants/routes';
 import SignOut from '../SignOut';
+import { FirebaseContext, withFirebase } from '../Firebase/';
 
-export default function Navigation() {
-  // eslint-disable-next-line
-  const { init, user } = useAuthState(app.auth());
+export default withFirebase(Navigation);
+
+function Navigation() {
+  const value = useContext(FirebaseContext);
+  const user = value.authUser;
   return (
     <>
       {
@@ -61,9 +61,7 @@ function NavigationNonAuth() {
   );
 };
 
-function NavigationAuth(props) {
-  const user = props.user;
-  console.log(props);
+function NavigationAuth({ user }) {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -90,7 +88,7 @@ function NavigationAuth(props) {
               <Link className="nav-link active" to={ROUTES.BAKA}>Baka</Link>
             </li>
           </ul>
-          <SignOut user={user}/>
+          <SignOut user={user} />
         </div>
       </nav>
     </div>

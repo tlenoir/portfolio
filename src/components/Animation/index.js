@@ -42,8 +42,8 @@ export default class Animation extends Component {
     return (
       <div className="card-columns portfolio-card">
         {/* animate text into card*/}
-        {animation.map(anim => (
-          <div className="card">
+        {animation.map((anim, key) => (
+          <div key={key} className="card">
             <div className="card-body">
               <h5 className="card-title">{this.capitalize(anim)}</h5>
               <h6 className="card-subtitle mb-2 text-muted">Animation</h6>
