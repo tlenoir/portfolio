@@ -53,6 +53,6 @@ function Baka() {
       </button>
         </div>
     );
-}
+};
 
 export default Baka;

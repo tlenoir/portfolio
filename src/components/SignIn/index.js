@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
-import app from 'firebase/app';
-import 'firebase/auth';
 import * as ROUTES from '../../constants/routes';
+import { withFirebase, FirebaseContext } from '../Firebase';
 import './signin.css';
 
-export default withRouter(SignInSession);
+export default withFirebase(withRouter(SignInSession));
 
 function SignInSession(props) {
   const [user, setUser] = useState({
@@ -13,9 +12,11 @@ function SignInSession(props) {
     password: '',
     error: null,
   });
+  const value = useContext(FirebaseContext);
+  const firebase = value.app;
 
   function onSubmit(event) {
-    app.auth().signInWithEmailAndPassword(user.email, user.password)
+    firebase.auth().signInWithEmailAndPassword(user.email, user.password)
       .then(() => {
         props.history.push(ROUTES.HOME);
       })
@@ -39,9 +40,8 @@ function SignInSession(props) {
   const isInvalid = user.password === '' || user.email === '';
 
   return (
-    <form onSubmit={onSubmit} >
-      <div className="form-group">
-        <label htmlFor="exampleInputEmail1">Ton mail bro</label>
+    <form className="justify-content-center" onSubmit={onSubmit} style={{ width: '50%' }}>
+      <div className="form-group mb-2">
         <input type="email"
           className="form-control"
           id="exampleInputEmail1"
@@ -52,8 +52,7 @@ function SignInSession(props) {
           onChange={onChange}
         />
       </div>
-      <div className="form-group">
-        <label for="exampleInputPassword1">ton pass bro</label>
+      <div className="form-group mb-2">
         <input type="password"
           name="password"
           value={user.password}
@@ -65,14 +64,14 @@ function SignInSession(props) {
       <button
         disabled={isInvalid}
         type="submit"
-        className="btn btn-block btn-primary">
+        className="btn btn-block btn-primary mb-2">
         Se co bro
         </button>
 
       {user.error &&
 
-        <div class="alert alert-danger rao-paddingSign" role="alert">
-          {user.error}
+        <div className="alert alert-danger rao-paddingSign" role="alert">
+          {user.error.message}
         </div>
       }
     </form >

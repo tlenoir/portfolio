@@ -30,31 +30,37 @@ function NavigationNonAuth() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto" data-toggle="collapse" data-target="#navbarSupportedContent">
             <li className="nav-item">
-              <Link className="nav-link active" to={ROUTES.ANIMATION}>Animation</Link>
+              <Link className="nav-link active" to={ROUTES.ANIMATION}>{ROUTES.ANIMATION_NAME}</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to={ROUTES.GALLERY}>Gallery</Link>
+              <Link className="nav-link active" to={ROUTES.GALLERY}>{ROUTES.GALLERY_NAME}</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to={ROUTES.SHOP}>Shop</Link>
+              <Link className="nav-link active" to={ROUTES.RANDOM}>{ROUTES.RANDOM_NAME}</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to={ROUTES.MOVIE}>Movie</Link>
+              <Link className="nav-link active" to={ROUTES.MOVIE}>{ROUTES.MOVIE_NAME}</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to={ROUTES.BAKA}>Baka</Link>
+              <Link className="nav-link active" to={ROUTES.BAKA}>{ROUTES.BAKA_NAME}</Link>
             </li>
           </ul>
-          <form className="form-inline my-2 my-lg-0">
-            <Link to={ROUTES.SIGN_IN}>
-              <button className="btn btn-outline-success my-2 my-sm-0"
-                data-toggle="collapse"
-                data-target="#navbarTogglerDemo03"
-                type="submit">
-                Se connecter
-              </button>
-            </Link>
-          </form>
+          <Link to={ROUTES.SIGN_IN}>
+            <button className="btn btn-outline-success my-2 my-sm-0"
+              data-toggle="collapse"
+              data-target="#navbarTogglerDemo03"
+              type="submit">
+              {ROUTES.SIGN_IN_NAME}
+            </button>
+          </Link>
+          <Link to={ROUTES.SIGN_UP}>
+            <button className="btn btn-outline-success my-2 my-sm-0"
+              data-toggle="collapse"
+              data-target="#navbarTogglerDemo03"
+              type="submit">
+              {ROUTES.SIGN_UP_NAME}
+            </button>
+          </Link>
         </div>
       </nav>
     </div>
@@ -73,19 +79,22 @@ function NavigationAuth({ user }) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto" data-toggle="collapse" data-target="#navbarSupportedContent">
             <li className="nav-item">
-              <Link className="nav-link active" to={ROUTES.ANIMATION}>Animation</Link>
+              <Link className="nav-link active" to={ROUTES.ANIMATION}>{ROUTES.ANIMATION_NAME}</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to={ROUTES.GALLERY}>Gallery</Link>
+              <Link className="nav-link active" to={ROUTES.GALLERY}>{ROUTES.GALLERY_NAME}</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to={ROUTES.SHOP}>Shop</Link>
+              <Link className="nav-link active" to={ROUTES.RANDOM}>{ROUTES.RANDOM_NAME}</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to={ROUTES.MOVIE}>Movie</Link>
+              <Link className="nav-link active" to={ROUTES.MOVIE}>{ROUTES.MOVIE_NAME}</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to={ROUTES.BAKA}>Baka</Link>
+              <Link className="nav-link active" to={ROUTES.BAKA}>{ROUTES.BAKA_NAME}</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link active" to={ROUTES.SHOP}>{ROUTES.SHOP_NAME}</Link>
             </li>
           </ul>
           <SignOut user={user} />

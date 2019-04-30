@@ -1,14 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-
-import Navigation from "../Navigation";
-import Animation from "../Animation";
-import GalleryComponent from "../Gallery";
-import ShopComponent from "../Shop";
-import MovieComponent from "../Movie";
-import Baka from "../Baka";
 import * as ROUTES from '../../constants/routes';
-import SignIn from '../SignIn';
+import Navigation from "../Navigation";
 
 export default function AppComponent() {
   return (
@@ -17,12 +10,13 @@ export default function AppComponent() {
         <Navigation />
         <div className="container-fluid">
           <Switch>
-            <Route exact path={ROUTES.ANIMATION} component={Animation} />
-            <Route exact path={ROUTES.SHOP} component={ShopComponent} />
-            <Route exact path={ROUTES.GALLERY} component={GalleryComponent} />
-            <Route exact path={ROUTES.MOVIE} component={MovieComponent} />
-            <Route exact path={ROUTES.BAKA} component={Baka} />
-            <Route exact path={ROUTES.SIGN_IN} component={SignIn} />
+            <Route exact path={ROUTES.ANIMATION} component={ROUTES.ANIMATION_COMPONENT} />
+            <Route exact path={ROUTES.SHOP} component={ROUTES.SHOP_COMPONENT} />
+            <Route exact path={ROUTES.RANDOM} component={ROUTES.RANDOM_COMPONENT} />
+            <Route exact path={ROUTES.GALLERY} component={ROUTES.GALLERY_COMPONENT} />
+            <Route exact path={ROUTES.MOVIE} component={ROUTES.MOVIE_COMPONENT} />
+            <Route exact path={ROUTES.BAKA} component={ROUTES.BAKA_COMPONENT} />
+            <Route exact path={ROUTES.SIGN_IN} component={ROUTES.SIGN_IN_COMPONENT} />
           </Switch>
         </div>
       </div>

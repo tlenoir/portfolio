@@ -4,16 +4,7 @@ import Lightbox from 'react-images';
 import ReactPaginate from 'react-paginate';
 import SelectedImage from './selectedImage';
 import './gallery.css'
-class GalleryComponent extends Component {
-    render() {
-        return (
-            <div>
-                GalleryComponent
-                <Unsplash />
-            </div>
-        )
-    }
-}
+
 function Unsplash() {
     const [picture, setPicture] = useState({
         pages: 0,
@@ -155,4 +146,4 @@ function Unsplash() {
         </>
     )
 }
-export default GalleryComponent;
+export default Unsplash;
