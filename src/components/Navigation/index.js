@@ -48,7 +48,7 @@ function NavigationNonAuth() {
           <Link to={ROUTES.SIGN_IN}>
             <button className="btn btn-outline-success my-2 my-sm-0"
               data-toggle="collapse"
-              data-target="#navbarTogglerDemo03"
+              data-target="#navbarSupportedContent"
               type="submit">
               {ROUTES.SIGN_IN_NAME}
             </button>
@@ -56,7 +56,7 @@ function NavigationNonAuth() {
           <Link to={ROUTES.SIGN_UP}>
             <button className="btn btn-outline-success my-2 my-sm-0"
               data-toggle="collapse"
-              data-target="#navbarTogglerDemo03"
+              data-target="#navbarSupportedContent"
               type="submit">
               {ROUTES.SIGN_UP_NAME}
             </button>

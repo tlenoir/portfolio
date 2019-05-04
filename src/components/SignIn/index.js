@@ -40,7 +40,7 @@ function SignInSession(props) {
   const isInvalid = user.password === '' || user.email === '';
 
   return (
-    <form className="justify-content-center" onSubmit={onSubmit} style={{ width: '50%' }}>
+    <form className="portfolio-content-center" onSubmit={onSubmit}>
       <div className="form-group mb-2">
         <input type="email"
           className="form-control"

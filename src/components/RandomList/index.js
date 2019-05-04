@@ -18,6 +18,8 @@ function RandomList() {
     ]);
   };
 
+  console.log('hello random page!');
+
   return (
     <>
       {

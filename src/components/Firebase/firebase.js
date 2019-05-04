@@ -20,13 +20,27 @@ const config = {
 app.initializeApp(config);
 
 const FirebaseContext = React.createContext();
+const authState = () => {
+    return useAuthState(app.auth()).user
+};
 
 function withFirebase(Component) {
+    const username = 'tetuaoro';
     return props => (
-        <FirebaseContext.Provider value={{ app, authUser: useAuthState(app.auth()).user }} >
+        <FirebaseContext.Provider value={{ app, authUser: authState(), username }} >
             <Component {...props} />
         </FirebaseContext.Provider>
     );
 };
 
-export { withFirebase, FirebaseContext };
+function WithAuthentication({ children }) {
+    const username = 'tetuaoro';
+    const user = useAuthState(app.auth()).user;
+    return (
+        <FirebaseContext.Provider value={{ app, user, username }} >
+            {children}
+        </FirebaseContext.Provider>
+    );
+};
+
+export { withFirebase, FirebaseContext, WithAuthentication };
