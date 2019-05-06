@@ -1,5 +1,4 @@
-import React, { useReducer, useContext } from 'react';
-import { WithAuthentication, FirebaseContext } from '../Firebase/firebase';
+import React, { useReducer } from 'react';
 
 const initialState = {
     loading: false,
@@ -32,9 +31,8 @@ const delay = (time = 1500) => {
 };
 
 function Baka() {
-    const test = useContext(FirebaseContext);
-    console.log(test);
-
+    /* const test = useContext(FirebaseContext);
+    console.log(test); */
     const [{ count, loading }, dispatch] = useReducer(reducer, initialState);
     const onHandleIncrement = async () => {
         dispatch({ type: 'loading' });
@@ -59,10 +57,11 @@ function Baka() {
     );
 };
 
-export default function App() {
+export default Baka;
+/* export default function App() {
     return (
         <WithAuthentication>
             <Baka />
         </WithAuthentication>
     );
-};
+}; */

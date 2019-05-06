@@ -1,6 +1,7 @@
 import React from 'react';
 import app from 'firebase/app';
 import 'firebase/database';
+import 'firebase/storage';
 import { useAuthState } from 'react-firebase-hooks/auth';
 /* 
 import app from 'firebase/app';
@@ -25,22 +26,29 @@ const authState = () => {
 };
 
 function withFirebase(Component) {
-    const username = 'tetuaoro';
     return props => (
-        <FirebaseContext.Provider value={{ app, authUser: authState(), username }} >
+        <FirebaseContext.Provider value={{ app, authUser: authState() }} >
             <Component {...props} />
         </FirebaseContext.Provider>
     );
+    /* how to use it: export default withFirebase(ExempleComponent) */
 };
 
 function WithAuthentication({ children }) {
-    const username = 'tetuaoro';
     const user = useAuthState(app.auth()).user;
     return (
-        <FirebaseContext.Provider value={{ app, user, username }} >
+        <FirebaseContext.Provider value={{ app, user }} >
             {children}
         </FirebaseContext.Provider>
     );
+    /* how to use it: export default function App() {
+        return (
+            <WithAuthentication>
+                <ExempleComponent />
+            </WithAuthentication>
+        );
+    }; 
+    */
 };
 
 export { withFirebase, FirebaseContext, WithAuthentication };
