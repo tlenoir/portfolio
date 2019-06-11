@@ -1,22 +1,31 @@
-import React, { useState, useContext } from 'react';
-import { withFirebase, FirebaseContext } from '../Firebase';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { useListVals, /* useList */ } from 'react-firebase-hooks/database';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { SIGN_IN } from '../../constants/routes';
+import app from 'firebase/app';
 import posed from 'react-pose';
+import App from './Cart/cart';
 
-export default withFirebase(Shop);
+const firebase = app;
 
 const Box = posed.div({
-    hidden: { height: 0 },
-    visible: { height: 100 + '%' }
+    hidden: {
+        height: 0,
+        opacity: 0
+    },
+    visible: {
+        height: 100 + '%',
+        opacity: 1
+    }
 });
 
-function Shop() {
-    const value = useContext(FirebaseContext);
-    const firebase = value.app;
-    const user = value.authUser;
+export default function Shop() {
+    const [user] = useAuthState(firebase.auth());
     const serverValue = firebase.database.ServerValue;
     const [isCreateElement, setCreate] = useState(false);
     const [files, setFiles] = useState([]);
+    console.log('utilisateur:', user);
     const [element, setElement] = useState({
         name: '',
         datecreated: '',
@@ -26,7 +35,7 @@ function Shop() {
     /* const test = useList(firebase.database().ref('shop'));
     test.value.map((i, key) => console.log('i', key, i.val())); */
     /* { error, loading, value } */
-    const shopValues = useListVals(firebase.database().ref('shop'));
+    const [values, loading, error] = useListVals(firebase.database().ref('shop'));
 
     function onChangeElement(event) {
         setElement({
@@ -90,6 +99,7 @@ function Shop() {
         event.preventDefault();
     };
 
+    if (!user) return (<Redirect to={SIGN_IN} />);
     return (
         <div>
             <button className="btn btn-primary mb-2" onClick={e => showFormToCreateElement(e)}>
@@ -142,22 +152,23 @@ function Shop() {
                 </form>
             </Box>
             <div>
-                {shopValues.error && <strong>Error: {shopValues.error}</strong>}
-                {shopValues.loading && <span>List:
+                {error && <strong>Error: {error}</strong>}
+                {loading && <span>List:
                     <div className="spinner-border text-danger" role="status">
                         <span className="sr-only">Loading...</span>
                     </div></span>}
-                {!shopValues.loading && shopValues.value && (
+                {!loading && values && (
                     <React.Fragment>
                         <span>
                             List:{' '}
-                            {shopValues.value.map((v, key) => (
+                            {values.map((v, key) => (
                                 <React.Fragment key={key}>{v.name}: {v.text}, </React.Fragment>
                             ))}
                         </span>
                     </React.Fragment>
                 )}
             </div>
+            <App />
         </div>
     );
 };

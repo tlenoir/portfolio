@@ -17,7 +17,7 @@ function SignOutButton(props) {
   return (
     <button className="btn btn-outline-success my-2 my-sm-0"
       type="submit" onClick={logout}>
-      {value.uid}
+      {value.displayName}
     </button>
   )
 };

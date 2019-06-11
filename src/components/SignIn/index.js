@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { withFirebase, FirebaseContext } from '../Firebase';
 import './signin.css';
@@ -67,6 +67,9 @@ function SignInSession(props) {
         className="btn btn-block btn-primary mb-2">
         Se co bro
         </button>
+
+        <hr />
+        <Link className="btn btn-danger" to={ROUTES.SIGN_UP} >creer un compte</Link>
 
       {user.error &&
 

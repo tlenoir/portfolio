@@ -4,6 +4,7 @@ import RandomComponent from "../components/RandomList";
 import MovieComponent from "../components/Movie";
 import Baka from "../components/Baka";
 import SignIn from '../components/SignIn';
+import SignUp from '../components/SignUp';
 import Shop from '../components/Shop';
 
 export const HOME = '/';
@@ -22,7 +23,7 @@ export const RANDOM_COMPONENT = RandomComponent;
 export const BAKA_COMPONENT = Baka;
 export const ANIMATION_COMPONENT = Animation;
 export const SIGN_IN_COMPONENT = SignIn;
-export const SIGN_UP_COMPONENT = '';
+export const SIGN_UP_COMPONENT = SignUp;
 export const SHOP_COMPONENT = Shop;
 
 export const HOME_NAME = 'Home';

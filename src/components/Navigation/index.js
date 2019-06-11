@@ -1,24 +1,30 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import SignOut from '../SignOut';
-import { FirebaseContext, withFirebase } from '../Firebase/';
+import Welcome from '../Bienvenue';
+import app from 'firebase/app';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-export default withFirebase(Navigation);
+const firebase = app;
+console.log('langue', navigator.language, navigator.languages);
 
-function Navigation() {
-  const value = useContext(FirebaseContext);
-  const user = value.authUser;
+export default function Navigation({ children }) {
+  const [user, loading, error] = useAuthState(firebase.auth());
   return (
     <>
-      {
-        user ? <NavigationAuth user={user} /> : <NavigationNonAuth />
+      {loading ? <Welcome /> :
+        <>
+          <NavigationAuth user={user} />
+          {children}
+          {error && <p>erreur de chargement</p>}
+        </>
       }
     </>
   );
 };
 
-function NavigationNonAuth() {
+/* function NavigationNonAuth() {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -65,7 +71,7 @@ function NavigationNonAuth() {
       </nav>
     </div>
   );
-};
+}; */
 
 function NavigationAuth({ user }) {
   return (
@@ -97,9 +103,35 @@ function NavigationAuth({ user }) {
               <Link className="nav-link active" to={ROUTES.SHOP}>{ROUTES.SHOP_NAME}</Link>
             </li>
           </ul>
-          <SignOut user={user} />
+          {
+            !user ?
+              <SignIn />
+              : <SignOut user={user} />}
         </div>
       </nav>
     </div>
+  );
+};
+
+function SignIn() {
+  return (
+    <>
+      <Link to={ROUTES.SIGN_IN}>
+        <button className="btn btn-outline-success my-2 my-sm-0"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          type="submit">
+          {ROUTES.SIGN_IN_NAME}
+        </button>
+      </Link>
+      <Link to={ROUTES.SIGN_UP}>
+        <button className="btn btn-outline-success my-2 my-sm-0"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          type="submit">
+          {ROUTES.SIGN_UP_NAME}
+        </button>
+      </Link>
+    </>
   );
 };

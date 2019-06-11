@@ -1,0 +1,41 @@
+  function onSubmit(event) {
+    const dateCreatedAccount = moment().locale('fr').format('DD MMMM YYYY kk mm ss');
+    const roles = [];
+    if (isAdmin) {
+      roles.push(ROLES.ADMIN);
+    } else {
+      roles.push(ROLES.SURFER);
+    }
+
+    props.firebase
+      .doCreateUserWithEmailAndPassword(email, passwordOne)
+      .then(authUser => {
+        // Create a user in your Firebase realtime database
+        return props.firebase
+          .user(authUser.user.uid)
+          .set({
+            /* juste username et email */
+            username,
+            email,
+            roles,
+            lastname,
+            firstname,
+            dateCreatedAccount
+          });
+      })
+      .then(() => {
+        return props.firebase.doSendEmailVerification();
+      })
+      .then(() => {
+        setState({ ...INITIAL_STATE });
+        props.history.push(ROUTES.HOME);
+      })
+      .catch(error => {
+        if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
+          error.message = ERROR_MSG_ACCOUNT_EXISTS;
+        }
+        setState({ error });
+      });
+
+    event.preventDefault();
+  };

@@ -21,13 +21,13 @@ const config = {
 app.initializeApp(config);
 
 const FirebaseContext = React.createContext();
-const authState = () => {
+/* const authState = () => {
     return useAuthState(app.auth()).user
-};
+}; */
 
 function withFirebase(Component) {
     return props => (
-        <FirebaseContext.Provider value={{ app, authUser: authState() }} >
+        <FirebaseContext.Provider value={{ app, authUser: useAuthState(app.auth()).user }} >
             <Component {...props} />
         </FirebaseContext.Provider>
     );
