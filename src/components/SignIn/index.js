@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
+import { SignUpLink } from '../SignUp';
 import { withFirebase, FirebaseContext } from '../Firebase';
 import './signin.css';
 
@@ -68,8 +69,8 @@ function SignInSession(props) {
         Se co bro
         </button>
 
-        <hr />
-        <Link className="btn btn-danger" to={ROUTES.SIGN_UP} >creer un compte</Link>
+      <hr />
+      <SignUpLink number='2' />
 
       {user.error &&
 

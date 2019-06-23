@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './signup.css';
 import * as moment from 'moment';
 import * as ROUTES from '../../constants/routes';
@@ -15,9 +16,7 @@ function SignUpPage(props) {
     <div className="row">
       <div className="col"></div>
       <div className="col-lg-6 col-md-10 col-sm-10">
-
         <SignUpFormBase history={props.history} />
-
       </div>
       <div className="col"></div>
     </div>
@@ -211,11 +210,20 @@ function SignUpFormBase({ history }) {
 };
 
 
-/* function SignUpLink() {
+export function SignUpLink({ number }) {
+  if (number === '0') return (
+    <Link to={ROUTES.SIGN_UP}>
+      <button className="btn btn-outline-success my-2 my-sm-0"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        type="submit">
+        {ROUTES.SIGN_UP_NAME}
+      </button>
+    </Link>)
   return (
-    <Link className="btn btn-link btn-sm ellipsis" to={ROUTES.SIGN_UP}>Sign Up</Link>
+    <Link className="btn btn-link btn-sm ellipsis" to={ROUTES.SIGN_UP}>Create account</Link>
   );
-}; */
+};
 
 const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
 const ERROR_MSG_ACCOUNT_EXISTS = `

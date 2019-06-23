@@ -2,9 +2,11 @@ import React from 'react';
 
 export default function Welcome() {
     return (
-        <div style={{ backgroundColor: 'white', 
-        position: 'absolute', 
-        top: 50 + '%', left: 50 + '%', transform: 'translate(-50%, -50%)' }}
+        <div style={{
+            backgroundColor: 'white',
+            position: 'absolute',
+            top: 50 + '%', left: 50 + '%', transform: 'translate(-50%, -50%)'
+        }}
             className='d-flex justify-content-center'>
             <div style={{ width: 15 + 'rem', height: 15 + 'rem' }}
                 className="spinner-border text-secondary justify-content-center"
@@ -13,4 +15,12 @@ export default function Welcome() {
             </div>
         </div>
     )
-}
+};
+
+export function Error() {
+    return (
+        <div>
+            <p>Oups! Le serveur à rencontrer un problème!</p>
+        </div>
+    )
+};

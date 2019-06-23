@@ -17,6 +17,18 @@ export const ANIMATION = '/animation';
 export const SIGN_IN = '/signin';
 export const SIGN_UP = '/signup';
 
+export const ArrayNavigationComponent = [
+    MovieComponent, GalleryComponent, Animation, RandomComponent, Baka, Shop
+];
+
+export const ArrayNavigationLink = [
+    '/movie', '/gallery', '/animation', '/random', '/baka', '/shop'
+];
+
+export const ArrayNavigationName = [
+    'Movie', 'Gallery', 'Animation', 'Random', 'Baka', 'Shop'
+];
+
 export const MOVIE_COMPONENT = MovieComponent;
 export const GALLERY_COMPONENT = GalleryComponent;
 export const RANDOM_COMPONENT = RandomComponent;
